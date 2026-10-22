@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entre em contato conosco pelo formulário.">
+  <title>Fale conosco</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class="contact-card">
+    <div class="eyebrow">FALE CONOSCO</div>
+    <h1>Entre em contato</h1>
+    <p class="intro">Preencha os campos abaixo. Responderemos assim que possível.</p>
+
+    <% if (mensagemStatus) { %>
+      <div class="status <%= tipoStatus === 'erro' ? 'status-error' : 'status-success' %>" role="status" aria-live="polite">
+        <%= mensagemStatus %>
+      </div>
+    <% } %>
+
+    <% if (erros && erros.length) { %>
+      <ul class="error-list" role="alert">
+        <% erros.forEach(function(erro) { %>
+          <li><%= erro.msg %></li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <form action="/contato" method="POST">
+      <div class="form-group">
+        <label for="nome">Nome <span>*</span></label>
+        <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" autocomplete="name" maxlength="100" value="<%= dados.nome %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-mail <span>*</span></label>
+        <input type="email" id="email" name="email" placeholder="voce@exemplo.com" autocomplete="email" maxlength="254" value="<%= dados.email %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone <small>(opcional)</small></label>
+        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" autocomplete="tel" maxlength="30" value="<%= dados.telefone %>">
+      </div>
+
+      <div class="form-group">
+        <label for="assunto">Assunto <span>*</span></label>
+        <input type="text" id="assunto" name="assunto" placeholder="Sobre o que você quer falar?" maxlength="150" value="<%= dados.assunto %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="mensagem">Mensagem <span>*</span></label>
+        <textarea id="mensagem" name="mensagem" rows="6" placeholder="Escreva sua mensagem aqui..." minlength="5" maxlength="5000" required><%= dados.mensagem %></textarea>
+      </div>
+
+      <button type="submit">Enviar mensagem <span aria-hidden="true">→</span></button>
+      <p class="required-note">* Campos obrigatórios</p>
+    </form>
+  </main>
+  <script src="/js/form.js" defer></script>
+</body>
+</html>
